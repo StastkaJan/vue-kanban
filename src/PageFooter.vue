@@ -1,11 +1,19 @@
 <script setup lang="ts">
-// import { RouterLink } from 'vue-router'
+const date = new Date()
 </script>
 
 <template>
   <footer>
-
+    <p>&copy;{{ date.getFullYear() }} Kanban template | By Jan Šťástka</p>
   </footer>
 </template>
 
-<style scoped></style>
+<style scoped>
+footer {
+  padding: 1rem;
+}
+
+footer p {
+  text-align: center;
+}
+</style>

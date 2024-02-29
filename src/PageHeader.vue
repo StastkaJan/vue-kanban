@@ -1,17 +1,16 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
-console.log(window.matchMedia('(prefers-color-scheme: dark)'))
 </script>
 
 <template>
   <header>
-    <RouterLink to="/">
-      <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="50" height="50" />
+    <RouterLink to="/" class="logo">
+      <img alt="logo" src="@/assets/logo.svg" width="50" height="50" />
+      <span>Kanban template</span>
     </RouterLink>
 
     <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/profile">Profile</RouterLink>
     </nav>
   </header>
 </template>
@@ -25,7 +24,12 @@ header {
 }
 
 .logo {
-  display: block;
+  display: flex;
+  align-items: center;
+}
+
+.logo span {
+  font-size: 1.2rem;
 }
 
 nav {
