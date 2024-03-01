@@ -1,17 +1,17 @@
-export type comments = Array<{
+export type commentsType = Array<{
   user: string
   text: string
 }>
 
-export type task = {
+export type taskType = {
   id: number
   name: string
   description: string
   dueDate: Date
-  comments: comments
+  comments: commentsType
 }
 
-export type tasksLists = Array<{
+export type tasksListType = {
   name: string
-  tasks: Array<task>
-}>
+  tasks: Array<taskType>
+}
