@@ -4,16 +4,13 @@
       <nav>
         <ul>
           <li>
-            <RouterLink to="/">Tile view</RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/list">List view</RouterLink>
+            <RouterLink to="/">My tasks</RouterLink>
           </li>
         </ul>
       </nav>
     </aside>
 
-    <slot />
+    <slot></slot>
   </div>
 </template>
 
