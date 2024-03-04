@@ -36,3 +36,23 @@ let lists = reactive<tasksListType[]>([{
     </div>
   </main>
 </template>
+
+<style scoped>
+main {
+  min-height: 70vh;
+  margin-right: 5rem;
+}
+
+header {
+  margin-bottom: 3rem;
+  border-bottom: 2px solid var(--prim-color);
+}
+
+h1 {
+  color: var(--prim-color);
+}
+
+div {
+  display: flex;
+}
+</style>

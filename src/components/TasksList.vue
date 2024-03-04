@@ -15,3 +15,13 @@ const { list } = defineProps<{ list: tasksListType }>()
     </div>
   </section>
 </template>
+
+<style scoped>
+section {
+  width: 300px;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+</style>
