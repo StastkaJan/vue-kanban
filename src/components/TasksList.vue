@@ -7,7 +7,7 @@ const { list } = defineProps<{ list: tasksListType }>()
 </script>
 
 <template>
-  <section>
+  <section @dragover.prevent>
     <h2>{{ list.name }}</h2>
 
     <div>
@@ -18,10 +18,8 @@ const { list } = defineProps<{ list: tasksListType }>()
 
 <style scoped>
 section {
-  width: 300px;
-}
-
-h2 {
-  margin-bottom: 1rem;
+  flex-shrink: 0;
+  width: 270px;
+  padding: 1rem;
 }
 </style>

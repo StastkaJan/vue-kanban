@@ -17,7 +17,7 @@
 <style scoped>
 .basic-layout {
   display: grid;
-  grid-template-columns: minmax(100px, 200px) 1fr;
+  grid-template-columns: clamp(100px, 150px, 200px) 1fr;
 }
 
 nav {

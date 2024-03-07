@@ -22,6 +22,30 @@ let lists = reactive<tasksListType[]>([{
     dueDate: new Date(2024, 3, 10, 12, 15),
     comments: []
   }]
+}, {
+  name: 'Task list 3',
+  tasks: [{
+    id: 1,
+    name: 'Wash dishes',
+    description: 'Lorem impsum dolor sit amet',
+    dueDate: new Date(2024, 3, 10, 12, 15),
+    comments: []
+  }]
+}, {
+  name: 'Task list 4',
+  tasks: [{
+    id: 1,
+    name: 'Wash dishes',
+    description: 'Lorem impsum dolor sit amet',
+    dueDate: new Date(2024, 3, 10, 12, 15),
+    comments: []
+  }, {
+    id: 2,
+    name: 'Wash dishes',
+    description: 'Lorem impsum dolor sit amet',
+    dueDate: new Date(2024, 3, 10, 12, 15),
+    comments: []
+  }]
 }])
 </script>
 
@@ -40,11 +64,12 @@ let lists = reactive<tasksListType[]>([{
 <style scoped>
 main {
   min-height: 70vh;
-  margin-right: 5rem;
+  margin-right: 1rem;
+  overflow: auto;
 }
 
 header {
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   border-bottom: 2px solid var(--prim-color);
 }
 
@@ -54,5 +79,6 @@ h1 {
 
 div {
   display: flex;
+  overflow: auto;
 }
 </style>
