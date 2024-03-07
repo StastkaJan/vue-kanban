@@ -12,6 +12,12 @@ export type taskType = {
 }
 
 export type tasksListType = {
+  id: number
   name: string
   tasks: Array<taskType>
+}
+
+export type movingItemType = {
+  listId: number
+  itemId: number
 }

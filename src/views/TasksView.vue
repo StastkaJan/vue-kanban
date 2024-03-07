@@ -1,52 +1,8 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
 import TasksList from '@/components/TasksList.vue'
+import { listsStore } from '@/stores/tasksLists'
 
-import type { tasksListType } from '@/types/tasks'
-
-let lists = reactive<tasksListType[]>([{
-  name: 'Task list 1',
-  tasks: [{
-    id: 1,
-    name: 'Wash dishes',
-    description: 'Lorem impsum dolor sit amet',
-    dueDate: new Date(2024, 3, 10, 12, 15),
-    comments: []
-  }]
-}, {
-  name: 'Task list 2',
-  tasks: [{
-    id: 1,
-    name: 'Wash dishes',
-    description: 'Lorem impsum dolor sit amet',
-    dueDate: new Date(2024, 3, 10, 12, 15),
-    comments: []
-  }]
-}, {
-  name: 'Task list 3',
-  tasks: [{
-    id: 1,
-    name: 'Wash dishes',
-    description: 'Lorem impsum dolor sit amet',
-    dueDate: new Date(2024, 3, 10, 12, 15),
-    comments: []
-  }]
-}, {
-  name: 'Task list 4',
-  tasks: [{
-    id: 1,
-    name: 'Wash dishes',
-    description: 'Lorem impsum dolor sit amet',
-    dueDate: new Date(2024, 3, 10, 12, 15),
-    comments: []
-  }, {
-    id: 2,
-    name: 'Wash dishes',
-    description: 'Lorem impsum dolor sit amet',
-    dueDate: new Date(2024, 3, 10, 12, 15),
-    comments: []
-  }]
-}])
+let lists = listsStore()
 </script>
 
 <template>
@@ -56,7 +12,7 @@ let lists = reactive<tasksListType[]>([{
     </header>
 
     <div>
-      <TasksList v-for="list of lists" :key="list.name" :list="list" />
+      <TasksList v-for="list of lists.lists" :key="list.name" :list="list" />
     </div>
   </main>
 </template>
@@ -81,4 +37,4 @@ div {
   display: flex;
   overflow: auto;
 }
-</style>
+</style>@/stores/tasksLists
