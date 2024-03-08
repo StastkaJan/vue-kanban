@@ -8,7 +8,7 @@ export type taskType = {
   name: string
   description: string
   dueDate: Date
-  comments: commentsType
+  comments?: commentsType
 }
 
 export type tasksListType = {

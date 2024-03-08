@@ -1,22 +1,19 @@
 <script setup lang="ts">
 import TaskItem from '@/components/TaskItem.vue'
+import { listsStore } from '@/stores/tasksLists'
 
 import type { tasksListType } from '@/types/tasks'
 
 const { list } = defineProps<{ list: tasksListType }>()
 
-const dragItem = (event: DragEvent, itemId: number) => {
-  if (!event || !event.dataTransfer) return
+let lists = listsStore()
 
-  event.dataTransfer.dropEffect = 'move'
-  event.dataTransfer.effectAllowed = 'move'
-  event.dataTransfer.setData('itemId', JSON.stringify({ listId: list.id, itemId }))
+const dragItem = (event: DragEvent, itemId: number) => {
+  lists.dragItem(event, list.id, itemId)
 }
 
-const dropItem = (event: DragEvent) => {
-  if (!event || !event.dataTransfer) return
-
-  let { listId, itemId } = JSON.parse(event.dataTransfer.getData('itemId'))
+const dropItem = () => {
+  lists.dropItem(list.id)
 }
 </script>
 
