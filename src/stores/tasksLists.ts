@@ -59,7 +59,7 @@ export const listsStore = defineStore('lists', () => {
           id: 4_2,
           name: 'Wash dishes',
           description: 'Lorem impsum dolor sit amet',
-          dueDate: new Date(2024, 3, 10, 12, 15),
+          dueDate: new Date(2024, 3, 10, 12, 10),
           comments: []
         }
       ]
