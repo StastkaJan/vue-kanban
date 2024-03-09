@@ -2,7 +2,7 @@
 import TasksList from '@/components/TasksList.vue'
 import { listsStore } from '@/stores/tasksLists'
 
-let lists = listsStore()
+let { lists } = listsStore()
 </script>
 
 <template>
@@ -12,7 +12,7 @@ let lists = listsStore()
     </header>
 
     <div>
-      <TasksList v-for="list of lists.lists" :key="list.name" :list="list" />
+      <TasksList v-for="list of lists" :key="list.name" :list="list" />
     </div>
   </main>
 </template>

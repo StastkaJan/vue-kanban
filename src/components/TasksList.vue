@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import TaskItem from '@/components/TaskItem.vue'
 import { listsStore } from '@/stores/tasksLists'
 
@@ -7,16 +7,61 @@ import type { tasksListType } from '@/types/tasks'
 
 const { list } = defineProps<{ list: tasksListType }>()
 
-let { dropItem, dragItem } = listsStore()
+let { setListName, getItem, setItem, movingItem } = listsStore()
 
 const sortedTasks = computed(() =>
   [...list.tasks].sort((a, b) => Number(a.dueDate) - Number(b.dueDate))
 )
+
+const h2 = ref(list.name)
+
+const allowEdit = (e: MouseEvent) => {
+  const target = e.target as HTMLInputElement
+  if (!target) return
+
+  target.setAttribute('contenteditable', 'true')
+  target.focus()
+}
+
+const confirmEdit = (e: KeyboardEvent) => {
+  const target = e.target as HTMLInputElement
+  if (!target) return
+
+  setListName(list.id, target.innerText)
+  target.removeAttribute('contenteditable')
+}
+
+const cancelEdit = (e: FocusEvent) => {
+  const target = e.target as HTMLInputElement
+  if (!target) return
+
+  h2.value = list.name
+  target.removeAttribute('contenteditable')
+}
+
+const loginput = (e: KeyboardEvent) => {
+  const target = e.target as HTMLInputElement
+  if (!target) return
+
+  h2.value = target.innerText
+}
+
+const dragItem = (listId: number, itemId: number) => {
+  movingItem.listId = listId
+  movingItem.itemId = itemId
+}
+
+const dropItem = (listIdTo: number) => {
+  const item = getItem(movingItem.listId, movingItem.itemId, true)
+  setItem(listIdTo, item)
+}
 </script>
 
 <template>
   <section @dragover.prevent @drop="dropItem(list.id)">
-    <h2>{{ list.name }}</h2>
+    <h2 @dblclick="allowEdit" @keypress.enter="confirmEdit" @focusout="cancelEdit" @input.prevent="loginput">
+      {{ h2 }}
+    </h2>
 
     <TransitionGroup tag="div">
       <TaskItem v-for="task of sortedTasks" :key="task.id" :task="task" @dragstart="dragItem(list.id, task.id)" />

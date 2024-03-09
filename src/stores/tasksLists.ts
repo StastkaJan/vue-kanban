@@ -1,7 +1,12 @@
 import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 
-import type { taskType, tasksListType, movingItemType } from '@/types/tasks'
+import type { taskType, tasksListType } from '@/types/tasks'
+
+type movingItemType = {
+  listId: number
+  itemId: number
+}
 
 export const listsStore = defineStore('lists', () => {
   const lists = reactive<tasksListType[]>([
@@ -86,6 +91,13 @@ export const listsStore = defineStore('lists', () => {
     return item[0]
   }
 
+  const setListName = (listId: number, value: string) => {
+    const list = getList(listId)
+    if (!list) return
+
+    list.name = value
+  }
+
   const setItem = (listId: number, item: taskType) => {
     const list = getList(listId)
     if (!list) return
@@ -93,20 +105,5 @@ export const listsStore = defineStore('lists', () => {
     list.tasks.push(item)
   }
 
-  const dragItem = (listId: number, itemId: number) => {
-    movingItem.listId = listId
-    movingItem.itemId = itemId
-
-    return true
-  }
-
-  const dropItem = (listIdTo: number) => {
-    const { listId, itemId } = movingItem
-    const item = getItem(listId, itemId, true)
-    setItem(listIdTo, item)
-
-    return true
-  }
-
-  return { lists, movingItem, getList, getItem, setItem, dragItem, dropItem }
+  return { lists, movingItem, getList, getItem, setListName, setItem }
 })
