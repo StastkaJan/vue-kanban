@@ -5,7 +5,7 @@ const { task } = defineProps<{ task: taskType }>()
 </script>
 
 <template>
-  <div draggable="true" @dragstart="$emit('dragItem', $event, task.id)">
+  <div draggable="true">
     <h3>{{ task.name }}</h3>
     <span>{{ task.dueDate.toLocaleString('en-GB') }}</span>
   </div>

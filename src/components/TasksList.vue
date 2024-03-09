@@ -7,15 +7,7 @@ import type { tasksListType } from '@/types/tasks'
 
 const { list } = defineProps<{ list: tasksListType }>()
 
-let lists = listsStore()
-
-const dragItem = (event: DragEvent, itemId: number) => {
-  lists.dragItem(event, list.id, itemId)
-}
-
-const dropItem = () => {
-  lists.dropItem(list.id)
-}
+let { dropItem, dragItem } = listsStore()
 
 const sortedTasks = computed(() =>
   [...list.tasks].sort((a, b) => Number(a.dueDate) - Number(b.dueDate))
@@ -23,11 +15,11 @@ const sortedTasks = computed(() =>
 </script>
 
 <template>
-  <section @dragover.prevent @drop="dropItem">
+  <section @dragover.prevent @drop="dropItem(list.id)">
     <h2>{{ list.name }}</h2>
 
     <TransitionGroup tag="div">
-      <TaskItem v-for="task of sortedTasks" :key="task.id" :task="task" @dragItem="dragItem" />
+      <TaskItem v-for="task of sortedTasks" :key="task.id" :task="task" @dragstart="dragItem(list.id, task.id)" />
     </TransitionGroup>
   </section>
 </template>

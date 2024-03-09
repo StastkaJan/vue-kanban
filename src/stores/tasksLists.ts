@@ -93,11 +93,7 @@ export const listsStore = defineStore('lists', () => {
     list.tasks.push(item)
   }
 
-  const dragItem = (event: DragEvent, listId: number, itemId: number) => {
-    if (!event || !event.dataTransfer) return false
-
-    event.dataTransfer.dropEffect = 'move'
-    event.dataTransfer.effectAllowed = 'move'
+  const dragItem = (listId: number, itemId: number) => {
     movingItem.listId = listId
     movingItem.itemId = itemId
 
