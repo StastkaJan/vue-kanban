@@ -1,13 +1,22 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { setupStore } from '@/stores/setup'
+
 import type { taskType } from '@/types/tasks'
 
 const { task } = defineProps<{ task: taskType }>()
+
+const { languageCode } = setupStore()
+
+const formatedDate = computed(() => {
+  return task.dueDate.toLocaleString(languageCode, { dateStyle: 'short', timeStyle: 'short' })
+})
 </script>
 
 <template>
   <div draggable="true">
     <h3>{{ task.name }}</h3>
-    <span>{{ task.dueDate.toLocaleString('en-GB') }}</span>
+    <span>{{ formatedDate }}</span>
   </div>
 </template>
 
