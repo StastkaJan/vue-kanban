@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 import type { taskType, tasksListType } from '@/types/tasks'
@@ -71,10 +71,29 @@ export const listsStore = defineStore('lists', () => {
     }
   ])
 
+  const listIds = lists?.map((item) => item.id)
+  const newListId = ref((Math.max(...listIds) | 0) + 1)
+
+  const newTaskId = computed(() => {
+    return (listId: number) => {
+      const list = getList(listId)
+      const taskIds = list?.tasks?.map((item) => item.id)
+      return (Math.max(...taskIds) | 0) + 1
+    }
+  })
+
   const movingItem = reactive<movingItemType>({
     listId: 0,
     itemId: 0
   })
+
+  const addList = () => {
+    lists.push({
+      id: newListId.value++,
+      name: 'New list',
+      tasks: []
+    })
+  }
 
   const getList = (listId: number) => {
     return lists.filter((list) => list.id === listId)[0]
@@ -105,5 +124,15 @@ export const listsStore = defineStore('lists', () => {
     list.tasks.push(item)
   }
 
-  return { lists, movingItem, getList, getItem, setListName, setItem }
+  return {
+    lists,
+    newListId,
+    newTaskId,
+    movingItem,
+    addList,
+    getList,
+    getItem,
+    setListName,
+    setItem
+  }
 })

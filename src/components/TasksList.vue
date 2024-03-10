@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import TaskItem from '@/components/TaskItem.vue'
 import { listsStore } from '@/stores/tasksLists'
+import TaskItem from '@/components/TaskItem.vue'
 
 import type { tasksListType } from '@/types/tasks'
 
@@ -31,7 +31,7 @@ const confirmEdit = (e: KeyboardEvent) => {
   target.removeAttribute('contenteditable')
 }
 
-const cancelEdit = (e: FocusEvent) => {
+const cancelEdit = (e: FocusEvent | KeyboardEvent) => {
   const target = e.target as HTMLInputElement
   if (!target) return
 
@@ -39,7 +39,7 @@ const cancelEdit = (e: FocusEvent) => {
   target.removeAttribute('contenteditable')
 }
 
-const loginput = (e: KeyboardEvent) => {
+const loginput = (e: Event) => {
   const target = e.target as HTMLInputElement
   if (!target) return
 
