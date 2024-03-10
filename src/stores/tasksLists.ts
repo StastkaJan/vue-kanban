@@ -9,41 +9,12 @@ type movingItemType = {
 }
 
 export const listsStore = defineStore('lists', () => {
-  const lists = reactive<tasksListType[]>([
-    {
-      id: 1,
-      name: 'Task list 1',
-      tasks: [
-        {
-          id: 1_1,
-          name: 'Wash dishes',
-          description: 'Lorem impsum dolor sit amet',
-          dueDate: new Date(2024, 3, 10, 12, 15),
-          comments: []
-        }
-      ]
-    },
-    {
-      id: 2,
-      name: 'Task list 2',
-      tasks: [
-        {
-          id: 2_1,
-          name: 'Wash dishes',
-          description: 'Lorem impsum dolor sit amet',
-          dueDate: new Date(2024, 3, 10, 12, 15),
-          comments: []
-        },
-        {
-          id: 2_2,
-          name: 'Wash dishes',
-          description: 'Lorem impsum dolor sit amet',
-          dueDate: new Date(2024, 3, 10, 12, 10),
-          comments: []
-        }
-      ]
-    }
-  ])
+  const storedList = JSON.parse(localStorage.getItem('tasksLists') || '[]')
+  const lists = reactive<tasksListType[]>(storedList)
+
+  const saveList = () => {
+    localStorage.setItem('tasksLists', JSON.stringify(lists))
+  }
 
   const listIds = lists?.map((item) => item.id)
   const newListId = ref((Math.max(...listIds) | 0) + 1)
@@ -103,6 +74,7 @@ export const listsStore = defineStore('lists', () => {
     newListId,
     newTaskId,
     movingItem,
+    saveList,
     addList,
     getList,
     getItem,

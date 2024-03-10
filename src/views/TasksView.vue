@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { watch } from 'vue'
 import { listsStore } from '@/stores/tasksLists'
 import TasksList from '@/components/TasksList.vue'
 import PlusIcons from '@/components/icons/PlusIcon.vue'
 
-let { lists, addList } = listsStore()
+let { lists, addList, saveList } = listsStore()
+
+watch(lists, saveList)
 </script>
 
 <template>
