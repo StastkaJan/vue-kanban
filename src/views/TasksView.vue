@@ -21,13 +21,12 @@ let { lists } = listsStore()
 main {
   display: grid;
   grid-template-rows: max-content 1fr;
+  gap: 1rem;
   min-height: 70vh;
-  margin-right: 1rem;
   overflow: auto;
 }
 
 header {
-  margin-bottom: 1rem;
   border-bottom: 2px solid var(--prim-color);
 }
 

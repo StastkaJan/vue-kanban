@@ -17,7 +17,13 @@
 <style scoped>
 .basic-layout {
   display: grid;
+  align-items: center;
   grid-template-columns: clamp(100px, 150px, 200px) 1fr;
+  gap: 2rem;
+}
+
+aside {
+  max-height: 500px;
 }
 
 nav {
