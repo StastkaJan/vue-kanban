@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import TasksList from '@/components/TasksList.vue'
 import { listsStore } from '@/stores/tasksLists'
+import TasksList from '@/components/TasksList.vue'
+import PlusIcons from '@/components/icons/PlusIcon.vue'
 
-let { lists } = listsStore()
+let { lists, addList } = listsStore()
 </script>
 
 <template>
   <main>
     <header>
-      <h1>Tasks</h1>
+      <h1>
+        Tasks
+        <button @click="addList">
+          <PlusIcons :width="26" :height="26" />
+        </button>
+      </h1>
     </header>
 
     <div>
@@ -31,7 +37,16 @@ header {
 }
 
 h1 {
+  display: flex;
   color: var(--prim-color);
+}
+
+button {
+  fill: var(--prim-color);
+}
+
+button:hover {
+  fill: var(--text-color);
 }
 
 div {

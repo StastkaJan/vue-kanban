@@ -33,35 +33,9 @@ export const listsStore = defineStore('lists', () => {
           description: 'Lorem impsum dolor sit amet',
           dueDate: new Date(2024, 3, 10, 12, 15),
           comments: []
-        }
-      ]
-    },
-    {
-      id: 3,
-      name: 'Task list 3',
-      tasks: [
-        {
-          id: 3_1,
-          name: 'Wash dishes',
-          description: 'Lorem impsum dolor sit amet',
-          dueDate: new Date(2024, 3, 10, 12, 15),
-          comments: []
-        }
-      ]
-    },
-    {
-      id: 4,
-      name: 'Task list 4',
-      tasks: [
-        {
-          id: 4_1,
-          name: 'Wash dishes',
-          description: 'Lorem impsum dolor sit amet',
-          dueDate: new Date(2024, 3, 10, 12, 15),
-          comments: []
         },
         {
-          id: 4_2,
+          id: 2_2,
           name: 'Wash dishes',
           description: 'Lorem impsum dolor sit amet',
           dueDate: new Date(2024, 3, 10, 12, 10),
