@@ -8,7 +8,7 @@ import type { tasksListType } from '@/types/tasks'
 
 const { list } = defineProps<{ list: tasksListType }>()
 
-let { setListName, addListItem, getItem, setItem, movingItem } = listsStore()
+let { setListName, addNewTask, getTask, setTask, movingTask } = listsStore()
 
 const sortedTasks = computed(() =>
   [...list.tasks].sort((a, b) => Number(a.dueDate) - Number(b.dueDate))
@@ -16,7 +16,7 @@ const sortedTasks = computed(() =>
 
 const h2 = ref(list.name)
 
-const allowEdit = (e: MouseEvent) => {
+const allowNameEdit = (e: MouseEvent) => {
   const target = e.target as HTMLInputElement
   if (!target) return
 
@@ -24,7 +24,7 @@ const allowEdit = (e: MouseEvent) => {
   target.focus()
 }
 
-const confirmEdit = (e: KeyboardEvent) => {
+const confirmNameEdit = (e: KeyboardEvent) => {
   const target = e.target as HTMLInputElement
   if (!target) return
 
@@ -32,7 +32,7 @@ const confirmEdit = (e: KeyboardEvent) => {
   target.removeAttribute('contenteditable')
 }
 
-const cancelEdit = (e: FocusEvent | KeyboardEvent) => {
+const cancelNameEdit = (e: FocusEvent | KeyboardEvent) => {
   const target = e.target as HTMLInputElement
   if (!target) return
 
@@ -40,38 +40,39 @@ const cancelEdit = (e: FocusEvent | KeyboardEvent) => {
   target.removeAttribute('contenteditable')
 }
 
-const loginput = (e: Event) => {
+const trackNameInput = (e: Event) => {
   const target = e.target as HTMLInputElement
   if (!target) return
 
   h2.value = target.innerText
 }
 
-const dragItem = (listId: number, itemId: number) => {
-  movingItem.listId = listId
-  movingItem.itemId = itemId
+const dragTask = (listId: number, taskId: number) => {
+  movingTask.listId = listId
+  movingTask.taskId = taskId
 }
 
-const dropItem = (listIdTo: number) => {
-  const item = getItem(movingItem.listId, movingItem.itemId, true)
-  setItem(listIdTo, item)
+const dropTask = (listIdTo: number) => {
+  const task = getTask(movingTask.listId, movingTask.taskId, true)
+  setTask(listIdTo, task)
 }
 </script>
 
 <template>
-  <section @dragover.prevent @drop="dropItem(list.id)">
+  <section @dragover.prevent @drop="dropTask(list.id)">
     <h2>
-      <span @dblclick="allowEdit" @keypress.enter="confirmEdit" @focusout="cancelEdit" @input.prevent="loginput">
+      <span @dblclick="allowNameEdit" @keypress.enter="confirmNameEdit" @focusout="cancelNameEdit"
+        @input.prevent="trackNameInput">
         {{ h2 }}
       </span>
 
-      <button @click="addListItem(list.id)">
+      <button @click="addNewTask(list.id)">
         <PlusIcons :width="22" :height="22" />
       </button>
     </h2>
 
     <TransitionGroup tag="div">
-      <TaskItem v-for="task of sortedTasks" :key="task.id" :task="task" @dragstart="dragItem(list.id, task.id)" />
+      <TaskItem v-for="task of sortedTasks" :key="task.id" :task="task" @dragstart="dragTask(list.id, task.id)" />
     </TransitionGroup>
   </section>
 </template>
