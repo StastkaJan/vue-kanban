@@ -14,37 +14,26 @@ const sortedTasks = computed(() =>
   [...list.tasks].sort((a, b) => Number(a.dueDate) - Number(b.dueDate))
 )
 
-const h2 = ref(list.name)
+const listName = ref(list.name)
+const nameSpan = ref()
 
-const allowNameEdit = (e: MouseEvent) => {
-  const target = e.target as HTMLInputElement
-  if (!target) return
-
-  target.setAttribute('contenteditable', 'true')
-  target.focus()
+const allowNameEdit = () => {
+  nameSpan.value.setAttribute('contenteditable', 'true')
+  nameSpan.value.focus()
 }
 
-const confirmNameEdit = (e: KeyboardEvent) => {
-  const target = e.target as HTMLInputElement
-  if (!target) return
-
-  setListName(list.id, target.innerText)
-  target.removeAttribute('contenteditable')
+const confirmNameEdit = () => {
+  nameSpan.value.removeAttribute('contenteditable')
+  setListName(list.id, nameSpan.value.innerText)
 }
 
-const cancelNameEdit = (e: FocusEvent | KeyboardEvent) => {
-  const target = e.target as HTMLInputElement
-  if (!target) return
-
-  h2.value = list.name
-  target.removeAttribute('contenteditable')
+const cancelNameEdit = () => {
+  nameSpan.value.removeAttribute('contenteditable')
+  listName.value = list.name
 }
 
-const trackNameInput = (e: Event) => {
-  const target = e.target as HTMLInputElement
-  if (!target) return
-
-  h2.value = target.innerText
+const trackNameInput = () => {
+  listName.value = nameSpan.value.innerText
 }
 
 const dragTask = (listId: number, taskId: number) => {
@@ -62,8 +51,8 @@ const dropTask = (listIdTo: number) => {
   <section @dragover.prevent @drop="dropTask(list.id)">
     <h2>
       <span @dblclick="allowNameEdit" @keypress.enter="confirmNameEdit" @focusout="cancelNameEdit"
-        @input.prevent="trackNameInput">
-        {{ h2 }}
+        @input.prevent="trackNameInput" ref="nameSpan">
+        {{ listName }}
       </span>
 
       <button @click="addNewTask(list.id)">
