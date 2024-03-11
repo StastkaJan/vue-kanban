@@ -1,4 +1,4 @@
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 import type { taskType, tasksListType } from '@/types/tasks'
@@ -9,8 +9,13 @@ type movingItemType = {
 }
 
 export const listsStore = defineStore('lists', () => {
-  const storedList = JSON.parse(localStorage.getItem('tasksLists') || '[]')
-  const lists = reactive<tasksListType[]>(storedList)
+  const storedLists = JSON.parse(localStorage.getItem('tasksLists') || '[]')
+  for (const list of storedLists) {
+    for (const item of list.tasks) {
+      item.dueDate = new Date(item.dueDate)
+    }
+  }
+  const lists = reactive<tasksListType[]>(storedLists)
 
   const saveList = () => {
     localStorage.setItem('tasksLists', JSON.stringify(lists))
@@ -19,13 +24,11 @@ export const listsStore = defineStore('lists', () => {
   const listIds = lists?.map((item) => item.id)
   const newListId = ref((Math.max(...listIds) | 0) + 1)
 
-  const newTaskId = computed(() => {
-    return (listId: number) => {
-      const list = getList(listId)
-      const taskIds = list?.tasks?.map((item) => item.id)
-      return (Math.max(...taskIds) | 0) + 1
-    }
-  })
+  const newTaskId = (listId: number) => {
+    const list = getList(listId)
+    const taskIds = list?.tasks?.map((item) => item.id)
+    return (Math.max(...taskIds) | 0) + 1
+  }
 
   const movingItem = reactive<movingItemType>({
     listId: 0,
@@ -37,6 +40,15 @@ export const listsStore = defineStore('lists', () => {
       id: newListId.value++,
       name: 'New list',
       tasks: []
+    })
+  }
+
+  const addListItem = (listId: number) => {
+    getList(listId).tasks.push({
+      id: newTaskId(listId),
+      name: 'New task',
+      description: '',
+      dueDate: new Date()
     })
   }
 
@@ -76,6 +88,7 @@ export const listsStore = defineStore('lists', () => {
     movingItem,
     saveList,
     addList,
+    addListItem,
     getList,
     getItem,
     setListName,

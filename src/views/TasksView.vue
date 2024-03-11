@@ -56,4 +56,4 @@ div {
   display: flex;
   overflow: auto;
 }
-</style>@/stores/tasksLists
+</style>

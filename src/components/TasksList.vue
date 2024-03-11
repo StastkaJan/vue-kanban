@@ -2,12 +2,13 @@
 import { computed, ref } from 'vue'
 import { listsStore } from '@/stores/tasksLists'
 import TaskItem from '@/components/TaskItem.vue'
+import PlusIcons from '@/components/icons/PlusIcon.vue'
 
 import type { tasksListType } from '@/types/tasks'
 
 const { list } = defineProps<{ list: tasksListType }>()
 
-let { setListName, getItem, setItem, movingItem } = listsStore()
+let { setListName, addListItem, getItem, setItem, movingItem } = listsStore()
 
 const sortedTasks = computed(() =>
   [...list.tasks].sort((a, b) => Number(a.dueDate) - Number(b.dueDate))
@@ -59,8 +60,14 @@ const dropItem = (listIdTo: number) => {
 
 <template>
   <section @dragover.prevent @drop="dropItem(list.id)">
-    <h2 @dblclick="allowEdit" @keypress.enter="confirmEdit" @focusout="cancelEdit" @input.prevent="loginput">
-      {{ h2 }}
+    <h2>
+      <span @dblclick="allowEdit" @keypress.enter="confirmEdit" @focusout="cancelEdit" @input.prevent="loginput">
+        {{ h2 }}
+      </span>
+
+      <button @click="addListItem(list.id)">
+        <PlusIcons :width="22" :height="22" />
+      </button>
     </h2>
 
     <TransitionGroup tag="div">
@@ -74,6 +81,15 @@ section {
   flex-shrink: 0;
   width: 270px;
   padding: 1rem;
+}
+
+h2 {
+  display: flex;
+  gap: .5rem;
+}
+
+button {
+  fill: var(--text-color);
 }
 
 .v-move,
