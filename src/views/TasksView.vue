@@ -20,9 +20,13 @@ watch(lists, saveList)
       </h1>
     </header>
 
-    <div>
+    <div v-if="lists.length > 0">
       <TasksList v-for="list of lists" :key="list.name" :list="list" />
     </div>
+
+    <template v-else>
+      <p>Nothing to display, please add task list by clicking on plus button.</p>
+    </template>
   </main>
 </template>
 
